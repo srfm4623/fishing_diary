@@ -1,24 +1,48 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column             | Type   | Options     |
+| ------------------ | ------ | ----------- |
+| nickname           | string | null: false |
+| last_name          | string | null: false |
+| first_name         | string | null: false |
+| last_name_kana     | string | null: false |
+| first_name_kana    | string | null: false |
+| date               | date   | null: false |
+| email              | string | null: false |
+| encrypted_password | string | null: false |
 
-* Ruby version
+### Association
 
-* System dependencies
+- has_many :results
+- has_many :comments
 
-* Configuration
+## results テーブル
 
-* Database creation
+| Column        | Type       | Options           |
+| ------------- | ---------- | ----------------- |
+| title         | string     | null: false       |
+| length        | integer    | null: false       |
+| weight        | integer    | null: false       |
+| area          | string     |                   |
+| text          | text       |                   |
+| user          | references | foreign_key: true |
 
-* Database initialization
+### Association
 
-* How to run the test suite
+- belongs_to :user
+- has_many   :comments
 
-* Services (job queues, cache servers, search engines, etc.)
+## comments テーブル
 
-* Deployment instructions
+| Column | Type       | Options           |
+| ------ | ---------- | ----------------- |
+| text   | text       | null: false       |
+| user   | references | foreign_key: true |
+| posts  | references | foreign_key: true |
 
-* ...
+### Association
+
+- belongs_to :user
+- belongs_to :result
